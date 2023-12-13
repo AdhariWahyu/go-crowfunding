@@ -68,14 +68,7 @@ func (h *userHandler) Login(c *gin.Context) {
 		return
 	}
 
-	token, err := h.authService.GenerateToken(loggedinUser.ID)
-	if err != nil {
-		response := helper.APIResponse("Login failed", http.StatusBadRequest, "error", nil)
-		c.JSON(http.StatusBadRequest, response)
-		return
-	}
-
-	formatter := user.FormatUser(loggedinUser, token)
+	formatter := user.FormatUser(loggedinUser, "tokentokentoken")
 
 	response := helper.APIResponse("Successfuly loggedin", http.StatusOK, "success", formatter)
 
