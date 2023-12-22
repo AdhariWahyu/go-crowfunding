@@ -25,7 +25,6 @@ func (h *userHandler) RegisterUser(c *gin.Context) {
 	err := c.ShouldBindJSON(&input)
 	if err != nil {
 		errors := helper.FormatValidationError(err)
-
 		errorMessage := gin.H{"errors": errors}
 
 		response := helper.APIResponse("Register account failed", http.StatusUnprocessableEntity, "error", errorMessage)
@@ -165,4 +164,16 @@ func (h *userHandler) UploadAvatar(c *gin.Context) {
 	response := helper.APIResponse("Avatar successfuly uploaded", http.StatusOK, "success", data)
 
 	c.JSON(http.StatusOK, response)
+}
+
+func (h *userHandler) FetchUser(c *gin.Context) {
+
+	currentUser := c.MustGet("currentUser").(user.User)
+
+	formatter := user.FormatUser(currentUser, "")
+
+	response := helper.APIResponse("Successfuly fetch user data", http.StatusOK, "success", formatter)
+
+	c.JSON(http.StatusOK, response)
+
 }
